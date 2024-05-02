@@ -1,5 +1,6 @@
 package com.example.monolithtomicroservices.infrastructure.persistence.product;
 
+import com.example.monolithtomicroservices.infrastructure.persistence.brand.BrandEntity;
 import com.example.monolithtomicroservices.infrastructure.persistence.category.CategoryEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
