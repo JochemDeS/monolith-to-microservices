@@ -50,6 +50,50 @@ public class ProductEntity {
         this.image = builder.image;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public double getDiscountPercentage() {
+        return discountPercentage;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public BrandEntity getBrand() {
+        return brand;
+    }
+
+    public CategoryEntity getCategory() {
+        return category;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
     public static Builder builder() {
         return new Builder();
     }

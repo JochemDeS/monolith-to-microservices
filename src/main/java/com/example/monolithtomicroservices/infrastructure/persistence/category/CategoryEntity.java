@@ -27,6 +27,18 @@ public class CategoryEntity {
         this.products = builder.products;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<ProductEntity> getProducts() {
+        return products;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
