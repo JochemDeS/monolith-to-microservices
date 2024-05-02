@@ -1,6 +1,6 @@
 package com.example.monolithtomicroservices.domain;
 
-public record ProductId(String id) {
+public record ProductId(long id) {
     private ProductId(Builder builder) {
         this(builder.id);
     }
@@ -10,14 +10,9 @@ public record ProductId(String id) {
     }
 
     public static class Builder {
-        private String id;
+        private long id;
 
         public Builder id(long id) {
-            this.id = String.valueOf(id);
-            return this;
-        }
-
-        public Builder id(String id) {
             this.id = id;
             return this;
         }

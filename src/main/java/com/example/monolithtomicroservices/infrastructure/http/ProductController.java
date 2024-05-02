@@ -1,5 +1,6 @@
 package com.example.monolithtomicroservices.infrastructure.http;
 
+import com.example.monolithtomicroservices.application.common.ReturnUseCase;
 import com.example.monolithtomicroservices.application.product.GetAllProductsUseCase;
 import com.example.monolithtomicroservices.domain.Product;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,13 +12,32 @@ import java.util.List;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-    private final GetAllProductsUseCase getAllProductsUseCase;
+    private final ReturnUseCase<List<Product>> getAllProductsUseCase;
 
-    public ProductController(GetAllProductsUseCase getAllProductsUseCase) {
+    public ProductController(ReturnUseCase<List<Product>> getAllProductsUseCase) {
         this.getAllProductsUseCase = getAllProductsUseCase;
     }
     @GetMapping
-    public List<Product> getProducts() {
-        return getAllProductsUseCase.handle();
+    public List<ProductWriteModel> getProducts() {
+        List<Product> products = getAllProductsUseCase.handle();
+        return products.stream()
+                .map(this::fromDomain)
+                .toList();
+    }
+
+    private ProductWriteModel fromDomain(Product product) {
+        return ProductWriteModel.builder()
+                .id(product.id().id())
+                .title(product.title())
+                .description(product.description())
+                .price(product.price())
+                .discountPercentage(product.discountPercentage())
+                .rating(product.rating())
+                .stock(product.stock())
+                .brand(product.brand().name())
+                .category(product.category().name())
+                .thumbnail(product.thumbnail())
+                .image(product.image())
+                .build();
     }
 }
