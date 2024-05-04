@@ -1,4 +1,4 @@
-package com.example.monolithtomicroservices.infrastructure.http;
+package com.example.monolithtomicroservices.infrastructure.http.product;
 
 public record ProductReadModel(long id,
                                String title,

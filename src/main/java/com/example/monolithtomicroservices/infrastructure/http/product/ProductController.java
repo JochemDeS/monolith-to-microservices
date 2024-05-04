@@ -1,4 +1,4 @@
-package com.example.monolithtomicroservices.infrastructure.http;
+package com.example.monolithtomicroservices.infrastructure.http.product;
 
 import com.example.monolithtomicroservices.application.common.ReturnUseCase;
 import com.example.monolithtomicroservices.domain.Product;
