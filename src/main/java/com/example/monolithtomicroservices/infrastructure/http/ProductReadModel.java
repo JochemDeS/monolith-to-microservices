@@ -1,16 +1,16 @@
 package com.example.monolithtomicroservices.infrastructure.http;
 
-public record ProductWriteModel(long id,
-                                String title,
-                                String description,
-                                double price,
-                                double discountPercentage,
-                                double rating,
-                                int stock,
-                                String brand,
-                                String category,
-                                String thumbnail,
-                                String image
+public record ProductReadModel(long id,
+                               String title,
+                               String description,
+                               double price,
+                               double discountPercentage,
+                               double rating,
+                               int stock,
+                               String brand,
+                               String category,
+                               String thumbnail,
+                               String image
 ) {
     public static Builder builder() {
         return new Builder();
@@ -84,8 +84,8 @@ public record ProductWriteModel(long id,
             return this;
         }
 
-        public ProductWriteModel build() {
-            return new ProductWriteModel(id, title, description, price, discountPercentage, rating, stock, brand, category, thumbnail, image);
+        public ProductReadModel build() {
+            return new ProductReadModel(id, title, description, price, discountPercentage, rating, stock, brand, category, thumbnail, image);
         }
     }
 }

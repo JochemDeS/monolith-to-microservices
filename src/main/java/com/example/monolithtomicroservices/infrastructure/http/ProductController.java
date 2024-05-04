@@ -1,7 +1,6 @@
 package com.example.monolithtomicroservices.infrastructure.http;
 
 import com.example.monolithtomicroservices.application.common.ReturnUseCase;
-import com.example.monolithtomicroservices.application.product.GetAllProductsUseCase;
 import com.example.monolithtomicroservices.domain.Product;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,15 +17,15 @@ public class ProductController {
         this.getAllProductsUseCase = getAllProductsUseCase;
     }
     @GetMapping
-    public List<ProductWriteModel> getProducts() {
+    public List<ProductReadModel> getProducts() {
         List<Product> products = getAllProductsUseCase.handle();
         return products.stream()
                 .map(this::fromDomain)
                 .toList();
     }
 
-    private ProductWriteModel fromDomain(Product product) {
-        return ProductWriteModel.builder()
+    private ProductReadModel fromDomain(Product product) {
+        return ProductReadModel.builder()
                 .id(product.id().id())
                 .title(product.title())
                 .description(product.description())
