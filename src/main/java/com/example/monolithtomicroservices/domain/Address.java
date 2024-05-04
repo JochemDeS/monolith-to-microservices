@@ -1,9 +1,9 @@
 package com.example.monolithtomicroservices.domain;
 
-public record Address(AddressId id, String street, String houseNumber, String city, String zipCode, String country) {
+public record Address(AddressId id, String street, String houseNumber, String city, String zip, String country) {
 
     private Address(Builder builder) {
-        this(builder.id, builder.street, builder.houseNumber, builder.city, builder.zipCode, builder.country);
+        this(builder.id, builder.street, builder.houseNumber, builder.city, builder.zip, builder.country);
     }
 
     public static Builder builder() {
@@ -15,7 +15,7 @@ public record Address(AddressId id, String street, String houseNumber, String ci
         private String street;
         private String houseNumber;
         private String city;
-        private String zipCode;
+        private String zip;
         private String country;
 
         public Builder id(AddressId id) {
@@ -38,8 +38,8 @@ public record Address(AddressId id, String street, String houseNumber, String ci
             return this;
         }
 
-        public Builder zipCode(String zipCode) {
-            this.zipCode = zipCode;
+        public Builder zip(String zipCode) {
+            this.zip = zipCode;
             return this;
         }
 

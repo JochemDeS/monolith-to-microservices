@@ -1,8 +1,8 @@
 package com.example.monolithtomicroservices.domain;
 
-public record Customer(CustomerId id, Name name, Address address) {
+public record Customer(CustomerId id, Name name, Address address, String email) {
     private Customer(Builder builder) {
-        this(builder.id, builder.name, builder.address);
+        this(builder.id, builder.name, builder.address, builder.email);
     }
 
     public static Builder builder() {
@@ -13,6 +13,7 @@ public record Customer(CustomerId id, Name name, Address address) {
         private CustomerId id;
         private Name name;
         private Address address;
+        private String email;
 
         public Builder id(CustomerId id) {
             this.id = id;
@@ -26,6 +27,11 @@ public record Customer(CustomerId id, Name name, Address address) {
 
         public Builder address(Address address) {
             this.address = address;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
             return this;
         }
 
