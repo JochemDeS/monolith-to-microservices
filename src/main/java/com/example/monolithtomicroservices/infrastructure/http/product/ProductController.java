@@ -20,11 +20,11 @@ public class ProductController {
     public List<ProductReadModel> getProducts() {
         List<Product> products = getAllProductsUseCase.handle();
         return products.stream()
-                .map(this::fromDomain)
+                .map(this::mapToApplicationModel)
                 .toList();
     }
 
-    private ProductReadModel fromDomain(Product product) {
+    private ProductReadModel mapToApplicationModel(Product product) {
         return ProductReadModel.builder()
                 .id(product.id().id())
                 .title(product.title())

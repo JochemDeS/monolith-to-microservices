@@ -15,8 +15,10 @@ public class CustomerSqlPersistenceAdapter implements SaveCustomerPort {
 
     @Override
     public Customer save(Customer customer) {
-        final var result =  customerRepository.save(mapToCustomerEntity(customer));
-        return mapToCustomer(result);
+        customerRepository.findByEmail(customer.email()).ifPresent(customerEntity -> {
+                    throw new IllegalArgumentException("Customer already exists");
+        });
+        return mapToCustomer(customerRepository.save(mapToCustomerEntity(customer)));
     }
 
     private Customer mapToCustomer(CustomerEntity customerEntity) {
