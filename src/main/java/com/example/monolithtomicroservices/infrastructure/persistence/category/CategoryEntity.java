@@ -12,7 +12,7 @@ import java.util.List;
 public class CategoryEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column @NotNull
+    @Column(unique = true) @NotNull
     private String name;
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ProductEntity> products;

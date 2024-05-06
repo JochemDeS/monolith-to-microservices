@@ -16,7 +16,7 @@ public class CustomerEntity {
     @OneToOne(cascade = CascadeType.ALL)
     private AddressEntity address;
 
-    @Column
+    @Column(unique = true)
     private String email;
 
     public CustomerEntity() {
@@ -44,6 +44,10 @@ public class CustomerEntity {
 
     public AddressEntity getAddress() {
         return address;
+    }
+
+    public void setAddress(AddressEntity address) {
+        this.address = address;
     }
 
     public String getEmail() {

@@ -3,7 +3,12 @@ package com.example.monolithtomicroservices.infrastructure.persistence.address;
 import jakarta.persistence.*;
 
 @Entity(name = "Address")
-@Table(name = "addresses")
+@Table(name = "addresses", uniqueConstraints = {
+        @UniqueConstraint(name = "unique_address", columnNames = {
+                "street", "houseNumber", "city", "zip", "country"
+        })
+    }
+)
 public class AddressEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,6 +37,10 @@ public class AddressEntity {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getStreet() {

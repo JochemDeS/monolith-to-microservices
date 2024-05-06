@@ -3,14 +3,17 @@ package com.example.monolithtomicroservices.infrastructure.persistence.customer;
 import com.example.monolithtomicroservices.application.customer.SaveCustomerPort;
 import com.example.monolithtomicroservices.domain.*;
 import com.example.monolithtomicroservices.infrastructure.persistence.address.AddressEntity;
+import com.example.monolithtomicroservices.infrastructure.persistence.address.AddressSqlPersistenceAdapter;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CustomerSqlPersistenceAdapter implements SaveCustomerPort {
     private final CustomerRepository customerRepository;
+    private final AddressSqlPersistenceAdapter addressSqlPersistenceAdapter;
 
-    public CustomerSqlPersistenceAdapter(CustomerRepository customerRepository) {
+    public CustomerSqlPersistenceAdapter(CustomerRepository customerRepository, AddressSqlPersistenceAdapter addressSqlPersistenceAdapter) {
         this.customerRepository = customerRepository;
+        this.addressSqlPersistenceAdapter = addressSqlPersistenceAdapter;
     }
 
     @Override
@@ -18,7 +21,12 @@ public class CustomerSqlPersistenceAdapter implements SaveCustomerPort {
         customerRepository.findByEmail(customer.email()).ifPresent(customerEntity -> {
                     throw new IllegalArgumentException("Customer already exists");
         });
-        return mapToCustomer(customerRepository.save(mapToCustomerEntity(customer)));
+
+        final var address = addressSqlPersistenceAdapter.save(customer.address());
+        final var customerEntity = mapToCustomerEntity(customer);
+        customerEntity.setAddress(address);
+
+        return mapToCustomer(customerRepository.save(customerEntity));
     }
 
     private Customer mapToCustomer(CustomerEntity customerEntity) {
