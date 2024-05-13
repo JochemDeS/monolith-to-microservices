@@ -1,6 +1,7 @@
 package com.example.monolithtomicroservices.infrastructure.persistence.product;
 
 import com.example.monolithtomicroservices.application.product.GetAllProductsPort;
+import com.example.monolithtomicroservices.application.product.GetProductByIdPort;
 import com.example.monolithtomicroservices.application.product.ProductRequest;
 import com.example.monolithtomicroservices.domain.*;
 import com.example.monolithtomicroservices.infrastructure.persistence.brand.BrandEntity;
@@ -9,9 +10,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 
 @Component
-public class ProductSqlPersistenceAdapter implements GetAllProductsPort {
+public class ProductSqlPersistenceAdapter implements GetAllProductsPort, GetProductByIdPort {
     private final ProductRepository productRepository;
 
     public ProductSqlPersistenceAdapter(ProductRepository productRepository) {
@@ -43,6 +46,11 @@ public class ProductSqlPersistenceAdapter implements GetAllProductsPort {
                 .thumbnail(productEntity.getThumbnail())
                 .image(productEntity.getImage())
                 .build();
+    }
+
+    @Override
+    public Optional<Product> byId(ProductId id) {
+        return productRepository.findById(id.id()).map(this::toDomain);
     }
 
     private Category toDomain(CategoryEntity categoryEntity) {

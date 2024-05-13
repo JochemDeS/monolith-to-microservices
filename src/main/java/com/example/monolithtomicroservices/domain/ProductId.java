@@ -17,6 +17,11 @@ public record ProductId(long id) {
             return this;
         }
 
+        public Builder id(String id) {
+            this.id = Long.parseLong(id);
+            return this;
+        }
+
         public ProductId build() {
             return new ProductId(this.id);
         }

@@ -1,5 +1,6 @@
 package com.example.monolithtomicroservices.infrastructure.http;
 
+import com.example.monolithtomicroservices.application.exception.ResourceNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String, List<String>>> handleIllegalArgumentErrors(IllegalArgumentException ex) {
         return new ResponseEntity<>(getErrorsMap(List.of(ex.getMessage())), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Map<String, List<String>>> handleIllegalArgumentErrors(ResourceNotFoundException ex) {
+        return new ResponseEntity<>(getErrorsMap(List.of(ex.getMessage())), new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(Exception.class)

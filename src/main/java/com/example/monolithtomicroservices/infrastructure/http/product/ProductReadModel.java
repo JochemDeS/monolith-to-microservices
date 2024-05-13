@@ -13,12 +13,15 @@ public record ProductReadModel(@Positive @Schema(description = "Product id", def
                                @Positive @Schema(description = "Price of the product", defaultValue = "1250.99") double price,
                                @Positive @Schema(description = "Discount percentage", defaultValue = "13.23") double discountPercentage,
                                @Positive @Max(5) @Schema(description = "Rating", defaultValue = "4") double rating,
-                               @Positive @Schema(description = "Number of units in stock", defaultValue = "1234") int stock,
                                @NotBlank @Schema(description = "Brand of the product", defaultValue = "Apple") String brand,
                                @NotBlank @Schema(description = "Category of the product", defaultValue = "Smartphone") String category,
-                               @URL @Schema(description = "URL of thumbnail image", defaultValue = "https://cdn.dummyjson.com/product-images/2/thumbnail.jpg") String thumbnail,
-                               @URL @Schema(description = "URL of product image", defaultValue = "https://cdn.dummyjson.com/product-images/2/1.jpg") String image
+                               @URL @Schema(description = "URL of thumbnail image", defaultValue = "https://cdn.dummyjson.com/product-images/2/thumbnail.jpg") String thumbnail
 ) {
+    private ProductReadModel(Builder builder) {
+        this(builder.id, builder.title, builder.description, builder.price, builder.discountPercentage,
+                builder.rating, builder.brand, builder.category, builder.thumbnail);
+    }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -30,11 +33,9 @@ public record ProductReadModel(@Positive @Schema(description = "Product id", def
         private double price;
         private double discountPercentage;
         private double rating;
-        private int stock;
         private String brand;
         private String category;
         private String thumbnail;
-        private String image;
 
         public Builder id(long id) {
             this.id = id;
@@ -66,11 +67,6 @@ public record ProductReadModel(@Positive @Schema(description = "Product id", def
             return this;
         }
 
-        public Builder stock(int stock) {
-            this.stock = stock;
-            return this;
-        }
-
         public Builder brand(String brand) {
             this.brand = brand;
             return this;
@@ -86,13 +82,8 @@ public record ProductReadModel(@Positive @Schema(description = "Product id", def
             return this;
         }
 
-        public Builder image(String image) {
-            this.image = image;
-            return this;
-        }
-
         public ProductReadModel build() {
-            return new ProductReadModel(id, title, description, price, discountPercentage, rating, stock, brand, category, thumbnail, image);
+            return new ProductReadModel(this);
         }
     }
 }
