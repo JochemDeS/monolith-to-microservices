@@ -5,5 +5,5 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface GetAllProductsPort {
-    Page<Product> all(Pageable pageable);
+    Page<Product> all(ProductRequest request);
 }

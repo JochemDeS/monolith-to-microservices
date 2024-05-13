@@ -1,11 +1,12 @@
 package com.example.monolithtomicroservices.infrastructure.persistence.product;
 
 import com.example.monolithtomicroservices.application.product.GetAllProductsPort;
+import com.example.monolithtomicroservices.application.product.ProductRequest;
 import com.example.monolithtomicroservices.domain.*;
 import com.example.monolithtomicroservices.infrastructure.persistence.brand.BrandEntity;
 import com.example.monolithtomicroservices.infrastructure.persistence.category.CategoryEntity;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 
@@ -18,8 +19,12 @@ public class ProductSqlPersistenceAdapter implements GetAllProductsPort {
     }
 
     @Override
-    public Page<Product> all(Pageable pageable) {
-        return productRepository.findAll(pageable).map(this::toDomain);
+    public Page<Product> all(ProductRequest request) {
+        Specification<ProductEntity> specification = Specification.where(ProductSpecs.byCategory(request.category()))
+                        .and(ProductSpecs.byBrand(request.brand()))
+                        .and(ProductSpecs.byPriceRange(request.priceRange()))
+                        .and(ProductSpecs.byRatingRange(request.ratingRange()));
+        return productRepository.findAll(specification, request.pageable()).map(this::toDomain);
     }
 
     private Product toDomain(ProductEntity productEntity) {
