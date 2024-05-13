@@ -1,13 +1,15 @@
 package com.example.monolithtomicroservices.application.product;
 
-import com.example.monolithtomicroservices.application.common.ReturnUseCase;
+import com.example.monolithtomicroservices.application.common.UseCase;
 import com.example.monolithtomicroservices.domain.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class GetAllProductsUseCase implements ReturnUseCase<List<Product>> {
+public class GetAllProductsUseCase implements UseCase<Pageable, Page<Product>> {
     private final GetAllProductsPort getAllProductsPort;
 
     public GetAllProductsUseCase(GetAllProductsPort getAllProductsPort) {
@@ -15,7 +17,7 @@ public class GetAllProductsUseCase implements ReturnUseCase<List<Product>> {
     }
 
     @Override
-    public List<Product> handle() {
-        return getAllProductsPort.all();
+    public Page<Product> handle(Pageable pageable) {
+        return getAllProductsPort.all(pageable);
     }
 }

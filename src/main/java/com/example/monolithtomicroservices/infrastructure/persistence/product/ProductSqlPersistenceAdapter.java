@@ -4,9 +4,10 @@ import com.example.monolithtomicroservices.application.product.GetAllProductsPor
 import com.example.monolithtomicroservices.domain.*;
 import com.example.monolithtomicroservices.infrastructure.persistence.brand.BrandEntity;
 import com.example.monolithtomicroservices.infrastructure.persistence.category.CategoryEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 
 @Component
 public class ProductSqlPersistenceAdapter implements GetAllProductsPort {
@@ -17,10 +18,8 @@ public class ProductSqlPersistenceAdapter implements GetAllProductsPort {
     }
 
     @Override
-    public List<Product> all() {
-        return productRepository.findAll().stream()
-                .map(this::toDomain)
-                .toList();
+    public Page<Product> all(Pageable pageable) {
+        return productRepository.findAll(pageable).map(this::toDomain);
     }
 
     private Product toDomain(ProductEntity productEntity) {

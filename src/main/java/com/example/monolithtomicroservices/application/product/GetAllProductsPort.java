@@ -1,9 +1,9 @@
 package com.example.monolithtomicroservices.application.product;
 
 import com.example.monolithtomicroservices.domain.Product;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface GetAllProductsPort {
-    List<Product> all();
+    Page<Product> all(Pageable pageable);
 }
