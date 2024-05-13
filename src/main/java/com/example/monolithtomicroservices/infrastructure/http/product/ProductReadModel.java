@@ -1,16 +1,23 @@
 package com.example.monolithtomicroservices.infrastructure.http.product;
 
-public record ProductReadModel(long id,
-                               String title,
-                               String description,
-                               double price,
-                               double discountPercentage,
-                               double rating,
-                               int stock,
-                               String brand,
-                               String category,
-                               String thumbnail,
-                               String image
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import org.hibernate.validator.constraints.URL;
+
+@Schema(name = "ProductReadModel", description = "Model to read a product")
+public record ProductReadModel(@Positive @Schema(description = "Product id", defaultValue = "4") long id,
+                               @NotBlank @Schema(description = "Name of product", defaultValue = "Iphone X") String title,
+                               @NotBlank @Schema(description = "Description of the product", defaultValue = "Made by Apple") String description,
+                               @Positive @Schema(description = "Price of the product", defaultValue = "1250.99") double price,
+                               @Positive @Schema(description = "Discount percentage", defaultValue = "13.23") double discountPercentage,
+                               @Positive @Max(5) @Schema(description = "Rating", defaultValue = "4") double rating,
+                               @Positive @Schema(description = "Number of units in stock", defaultValue = "1234") int stock,
+                               @NotBlank @Schema(description = "Brand of the product", defaultValue = "Apple") String brand,
+                               @NotBlank @Schema(description = "Category of the product", defaultValue = "Smartphone") String category,
+                               @URL @Schema(description = "URL of thumbnail image", defaultValue = "https://cdn.dummyjson.com/product-images/2/thumbnail.jpg") String thumbnail,
+                               @URL @Schema(description = "URL of product image", defaultValue = "https://cdn.dummyjson.com/product-images/2/1.jpg") String image
 ) {
     public static Builder builder() {
         return new Builder();
