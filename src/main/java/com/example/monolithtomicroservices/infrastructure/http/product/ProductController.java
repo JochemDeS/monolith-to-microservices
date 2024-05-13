@@ -5,7 +5,6 @@ import com.example.monolithtomicroservices.application.product.ProductRequest;
 import com.example.monolithtomicroservices.domain.Product;
 import com.example.monolithtomicroservices.domain.ProductId;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Positive;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
