@@ -5,6 +5,7 @@ import com.example.monolithtomicroservices.domain.Address;
 import com.example.monolithtomicroservices.domain.Customer;
 import com.example.monolithtomicroservices.domain.Name;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 @Service
 public class RegisterCustomerUseCase implements UseCase<RegisterCustomer, Customer> {
@@ -18,6 +19,8 @@ public class RegisterCustomerUseCase implements UseCase<RegisterCustomer, Custom
 
     @Override
     public Customer handle(RegisterCustomer request) {
+        Assert.notNull(request, "Customer can not be null");
+
         final var customer = Customer.builder()
                 .name(Name.builder()
                         .firstName(request.customer().firstName())
