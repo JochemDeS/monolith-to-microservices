@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RegisterCustomerUseCase implements UseCase<RegisterCustomer, Customer> {
+    private final FindCustomerPort findCustomerPort;
     private final SaveCustomerPort saveCustomerPort;
 
-    public RegisterCustomerUseCase(SaveCustomerPort saveCustomerPort) {
+    public RegisterCustomerUseCase(FindCustomerPort findCustomerPort, SaveCustomerPort saveCustomerPort) {
+        this.findCustomerPort = findCustomerPort;
         this.saveCustomerPort = saveCustomerPort;
     }
 
@@ -30,6 +32,11 @@ public class RegisterCustomerUseCase implements UseCase<RegisterCustomer, Custom
                         .build())
                 .email(request.email())
                 .build();
+
+        findCustomerPort.byEmail(customer.email())
+                .ifPresent(c -> {
+                    throw new IllegalStateException("Email already exists");
+                });
 
         return saveCustomerPort.save(customer);
     }

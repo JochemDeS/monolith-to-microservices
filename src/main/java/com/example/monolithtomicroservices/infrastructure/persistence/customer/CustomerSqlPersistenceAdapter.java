@@ -1,13 +1,16 @@
 package com.example.monolithtomicroservices.infrastructure.persistence.customer;
 
+import com.example.monolithtomicroservices.application.customer.FindCustomerPort;
 import com.example.monolithtomicroservices.application.customer.SaveCustomerPort;
 import com.example.monolithtomicroservices.domain.*;
 import com.example.monolithtomicroservices.infrastructure.persistence.address.AddressEntity;
 import com.example.monolithtomicroservices.infrastructure.persistence.address.AddressSqlPersistenceAdapter;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
-public class CustomerSqlPersistenceAdapter implements SaveCustomerPort {
+public class CustomerSqlPersistenceAdapter implements FindCustomerPort, SaveCustomerPort {
     private final CustomerRepository customerRepository;
     private final AddressSqlPersistenceAdapter addressSqlPersistenceAdapter;
 
@@ -17,11 +20,13 @@ public class CustomerSqlPersistenceAdapter implements SaveCustomerPort {
     }
 
     @Override
-    public Customer save(Customer customer) {
-        customerRepository.findByEmail(customer.email()).ifPresent(customerEntity -> {
-                    throw new IllegalArgumentException("Customer already exists");
-        });
+    public Optional<Customer> byEmail(String email) {
+        return customerRepository.findByEmail(email)
+                .map(this::mapToCustomer);
+    }
 
+    @Override
+    public Customer save(Customer customer) {
         final var address = addressSqlPersistenceAdapter.save(customer.address());
         final var customerEntity = mapToCustomerEntity(customer);
         customerEntity.setAddress(address);
