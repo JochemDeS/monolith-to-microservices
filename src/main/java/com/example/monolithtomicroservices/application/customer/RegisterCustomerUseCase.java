@@ -9,11 +9,11 @@ import org.springframework.util.Assert;
 
 @Service
 public class RegisterCustomerUseCase implements UseCase<RegisterCustomer, Customer> {
-    private final FindCustomerPort findCustomerPort;
+    private final GetCustomerByEmailPort getCustomerByEmailPort;
     private final SaveCustomerPort saveCustomerPort;
 
-    public RegisterCustomerUseCase(FindCustomerPort findCustomerPort, SaveCustomerPort saveCustomerPort) {
-        this.findCustomerPort = findCustomerPort;
+    public RegisterCustomerUseCase(GetCustomerByEmailPort getCustomerByEmailPort, SaveCustomerPort saveCustomerPort) {
+        this.getCustomerByEmailPort = getCustomerByEmailPort;
         this.saveCustomerPort = saveCustomerPort;
     }
 
@@ -36,7 +36,7 @@ public class RegisterCustomerUseCase implements UseCase<RegisterCustomer, Custom
                 .email(request.email())
                 .build();
 
-        findCustomerPort.byEmail(customer.email())
+        getCustomerByEmailPort.byEmail(customer.email())
                 .ifPresent(c -> {
                     throw new IllegalStateException("Email already exists");
                 });

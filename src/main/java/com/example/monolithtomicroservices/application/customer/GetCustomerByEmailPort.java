@@ -4,6 +4,6 @@ import com.example.monolithtomicroservices.domain.Customer;
 
 import java.util.Optional;
 
-public interface FindCustomerPort {
+public interface GetCustomerByEmailPort {
     Optional<Customer> byEmail(String email);
 }
