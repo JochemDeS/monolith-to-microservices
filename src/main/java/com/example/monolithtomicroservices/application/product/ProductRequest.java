@@ -11,6 +11,10 @@ public record ProductRequest(
         RatingRange ratingRange,
         Pageable pageable
 ) {
+    private ProductRequest(final Builder builder) {
+        this(builder.category, builder.brand, builder.priceRange, builder.ratingRange, builder.pageable);
+    }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -48,7 +52,7 @@ public record ProductRequest(
         }
 
         public ProductRequest build() {
-            return new ProductRequest(category, brand, priceRange, ratingRange, pageable);
+            return new ProductRequest(this);
         }
     }
 }
