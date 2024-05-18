@@ -5,7 +5,6 @@ pipeline {
         stage('compile-and-test') {
             steps {
                 script {
-                    sh "apk add maven"
                     sh "mvn -q clean compile"
                     sh "mvn test -DskipITs"
                     sh "mvn -q package -DskipTests"
