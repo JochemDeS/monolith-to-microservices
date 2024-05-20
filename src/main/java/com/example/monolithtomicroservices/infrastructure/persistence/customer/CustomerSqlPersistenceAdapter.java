@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class CustomerByEmailSqlPersistenceAdapter implements GetCustomerByEmailPort, SaveCustomerPort {
+public class CustomerSqlPersistenceAdapter implements GetCustomerByEmailPort, SaveCustomerPort {
     private final CustomerRepository customerRepository;
     private final AddressSqlPersistenceAdapter addressSqlPersistenceAdapter;
 
-    public CustomerByEmailSqlPersistenceAdapter(CustomerRepository customerRepository, AddressSqlPersistenceAdapter addressSqlPersistenceAdapter) {
+    public CustomerSqlPersistenceAdapter(CustomerRepository customerRepository, AddressSqlPersistenceAdapter addressSqlPersistenceAdapter) {
         this.customerRepository = customerRepository;
         this.addressSqlPersistenceAdapter = addressSqlPersistenceAdapter;
     }
