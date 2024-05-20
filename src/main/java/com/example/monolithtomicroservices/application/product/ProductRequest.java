@@ -2,6 +2,7 @@ package com.example.monolithtomicroservices.application.product;
 
 import com.example.monolithtomicroservices.domain.PriceRange;
 import com.example.monolithtomicroservices.domain.RatingRange;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 public record ProductRequest(
