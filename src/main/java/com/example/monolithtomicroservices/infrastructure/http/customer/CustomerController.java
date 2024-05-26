@@ -5,6 +5,7 @@ import com.example.monolithtomicroservices.application.customer.RegisterCustomer
 import com.example.monolithtomicroservices.domain.Address;
 import com.example.monolithtomicroservices.domain.Customer;
 import com.example.monolithtomicroservices.domain.Name;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,7 @@ public class CustomerController {
     }
 
     @PostMapping("/register")
-    public void register(@RequestBody CustomerWriteModel request) {
+    public void register(@Valid @RequestBody CustomerWriteModel request) {
         final var registerCustomer = RegisterCustomer.builder()
                 .customer(Name.builder()
                         .firstName(request.firstName())

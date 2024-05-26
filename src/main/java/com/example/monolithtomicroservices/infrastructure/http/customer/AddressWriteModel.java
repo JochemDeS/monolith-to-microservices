@@ -1,18 +1,20 @@
 package com.example.monolithtomicroservices.infrastructure.http.customer;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Schema(name = "AddressWriteModel", description = "Model to create an address")
 public record AddressWriteModel(
-        @Schema(description = "Street name", defaultValue = "Main Street")
+        @NotBlank @Size(min = 4, max = 30) @Schema(description = "Street name", defaultValue = "Main Street")
         String street,
-        @Schema(description = "House number", defaultValue = "1")
+        @NotBlank @Size(max = 30) @Schema(description = "House number", defaultValue = "1")
         String houseNumber,
-        @Schema(description = "Postal code", defaultValue = "1000")
+        @NotBlank @Size(min = 2, max = 10) @Schema(description = "Postal code", defaultValue = "1000")
         String zipCode,
-        @Schema(description = "City", defaultValue = "Brussels")
+        @NotBlank @Size(min = 3, max = 30) @Schema(description = "City", defaultValue = "Brussels")
         String city,
-        @Schema(description = "Country", defaultValue = "Belgium")
+        @NotBlank @Size(min = 3, max = 30) @Schema(description = "Country", defaultValue = "Belgium")
         String country
 ) {
 
