@@ -17,10 +17,6 @@ public class ProductEntity {
     @Column @NotNull
     private double price;
     @Column @NotNull
-    private double discountPercentage;
-    @Column @NotNull
-    private double rating;
-    @Column @NotNull
     private int stock;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "brand_id")
@@ -41,8 +37,6 @@ public class ProductEntity {
         this.title = builder.title;
         this.description = builder.description;
         this.price = builder.price;
-        this.discountPercentage = builder.discountPercentage;
-        this.rating = builder.rating;
         this.stock = builder.stock;
         this.brand = builder.brand;
         this.category = builder.category;
@@ -64,14 +58,6 @@ public class ProductEntity {
 
     public double getPrice() {
         return price;
-    }
-
-    public double getDiscountPercentage() {
-        return discountPercentage;
-    }
-
-    public double getRating() {
-        return rating;
     }
 
     public int getStock() {
@@ -103,8 +89,6 @@ public class ProductEntity {
         private String title;
         private String description;
         private double price;
-        private double discountPercentage;
-        private double rating;
         private int stock;
         private BrandEntity brand;
         private CategoryEntity category;
@@ -128,16 +112,6 @@ public class ProductEntity {
 
         public Builder price(double price) {
             this.price = price;
-            return this;
-        }
-
-        public Builder discountPercentage(double discountPercentage) {
-            this.discountPercentage = discountPercentage;
-            return this;
-        }
-
-        public Builder rating(double rating) {
-            this.rating = rating;
             return this;
         }
 

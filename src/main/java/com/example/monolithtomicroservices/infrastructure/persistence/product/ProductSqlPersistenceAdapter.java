@@ -25,8 +25,7 @@ public class ProductSqlPersistenceAdapter implements GetAllProductsPort, GetProd
     public Page<Product> all(ProductRequest request) {
         Specification<ProductEntity> specification = Specification.where(ProductSpecs.byCategory(request.category()))
                         .and(ProductSpecs.byBrand(request.brand()))
-                        .and(ProductSpecs.byPriceRange(request.priceRange()))
-                        .and(ProductSpecs.byRatingRange(request.ratingRange()));
+                        .and(ProductSpecs.byPriceRange(request.priceRange()));
         return productRepository.findAll(specification, request.pageable()).map(this::toDomain);
     }
 
@@ -38,8 +37,6 @@ public class ProductSqlPersistenceAdapter implements GetAllProductsPort, GetProd
                 .title(productEntity.getTitle())
                 .description(productEntity.getDescription())
                 .price(productEntity.getPrice())
-                .discountPercentage(productEntity.getDiscountPercentage())
-                .rating(productEntity.getRating())
                 .stock(productEntity.getStock())
                 .brand(toDomain(productEntity.getBrand()))
                 .category(toDomain(productEntity.getCategory()))

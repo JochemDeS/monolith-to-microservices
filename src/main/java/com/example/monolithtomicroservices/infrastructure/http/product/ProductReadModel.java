@@ -11,15 +11,12 @@ public record ProductReadModel(@Positive @Schema(description = "Product id", def
                                @NotBlank @Schema(description = "Name of product", defaultValue = "Iphone X") String title,
                                @NotBlank @Schema(description = "Description of the product", defaultValue = "Made by Apple") String description,
                                @Positive @Schema(description = "Price of the product", defaultValue = "1250.99") double price,
-                               @Positive @Schema(description = "Discount percentage", defaultValue = "13.23") double discountPercentage,
-                               @Positive @Max(5) @Schema(description = "Rating", defaultValue = "4") double rating,
                                @NotBlank @Schema(description = "Brand of the product", defaultValue = "Apple") String brand,
                                @NotBlank @Schema(description = "Category of the product", defaultValue = "Smartphone") String category,
                                @URL @Schema(description = "URL of thumbnail image", defaultValue = "https://cdn.dummyjson.com/product-images/2/thumbnail.jpg") String thumbnail
 ) {
     private ProductReadModel(Builder builder) {
-        this(builder.id, builder.title, builder.description, builder.price, builder.discountPercentage,
-                builder.rating, builder.brand, builder.category, builder.thumbnail);
+        this(builder.id, builder.title, builder.description, builder.price, builder.brand, builder.category, builder.thumbnail);
     }
 
     public static Builder builder() {
@@ -31,8 +28,6 @@ public record ProductReadModel(@Positive @Schema(description = "Product id", def
         private String title;
         private String description;
         private double price;
-        private double discountPercentage;
-        private double rating;
         private String brand;
         private String category;
         private String thumbnail;
@@ -54,16 +49,6 @@ public record ProductReadModel(@Positive @Schema(description = "Product id", def
 
         public Builder price(double price) {
             this.price = price;
-            return this;
-        }
-
-        public Builder discountPercentage(double discountPercentage) {
-            this.discountPercentage = discountPercentage;
-            return this;
-        }
-
-        public Builder rating(double rating) {
-            this.rating = rating;
             return this;
         }
 

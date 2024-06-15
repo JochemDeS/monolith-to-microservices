@@ -4,6 +4,7 @@ import com.example.monolithtomicroservices.application.common.UseCase;
 import com.example.monolithtomicroservices.application.product.ProductRequest;
 import com.example.monolithtomicroservices.domain.Product;
 import com.example.monolithtomicroservices.domain.ProductId;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/products")
+@Tag(name = "Product", description = "All endpoints for the product")
 public class ProductController {
     private final UseCase<ProductRequest, Page<Product>> getAllProductsUseCase;
     private final UseCase<ProductId, Product> getProductByIdUseCase;
@@ -29,7 +31,6 @@ public class ProductController {
                 .category(request.category())
                 .brand(request.brand())
                 .priceRange(request.priceRange())
-                .ratingRange(request.ratingRange())
                 .pageable(pageable)
                 .build();
 
@@ -61,8 +62,6 @@ public class ProductController {
                 .title(product.title())
                 .description(product.description())
                 .price(product.price())
-                .discountPercentage(product.discountPercentage())
-                .rating(product.rating())
                 .brand(product.brand().name())
                 .category(product.category().name())
                 .thumbnail(product.thumbnail())
@@ -75,8 +74,6 @@ public class ProductController {
                 .title(product.title())
                 .description(product.description())
                 .price(product.price())
-                .discountPercentage(product.discountPercentage())
-                .rating(product.rating())
                 .stock(product.stock())
                 .brand(product.brand().name())
                 .category(product.category().name())

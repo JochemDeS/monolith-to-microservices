@@ -1,7 +1,6 @@
 package com.example.monolithtomicroservices.infrastructure.http.product;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import org.hibernate.validator.constraints.URL;
@@ -10,16 +9,14 @@ public record ProductDetailReadModel(@Positive @Schema(description = "Product id
                                      @NotBlank @Schema(description = "Name of product", defaultValue = "Iphone X") String title,
                                      @NotBlank @Schema(description = "Description of the product", defaultValue = "Made by Apple") String description,
                                      @Positive @Schema(description = "Price of the product", defaultValue = "1250.99") double price,
-                                     @Positive @Schema(description = "Discount percentage", defaultValue = "13.23") double discountPercentage,
-                                     @Positive @Max(5) @Schema(description = "Rating", defaultValue = "4") double rating,
                                      @Positive @Schema(description = "Number of units in stock", defaultValue = "1234") int stock,
                                      @NotBlank @Schema(description = "Brand of the product", defaultValue = "Apple") String brand,
                                      @NotBlank @Schema(description = "Category of the product", defaultValue = "Smartphone") String category,
                                      @URL @Schema(description = "URL of thumbnail image", defaultValue = "https://cdn.dummyjson.com/product-images/2/thumbnail.jpg") String thumbnail,
                                      @URL @Schema(description = "URL of product image", defaultValue = "https://cdn.dummyjson.com/product-images/2/1.jpg") String image) {
     private ProductDetailReadModel(Builder builder) {
-        this(builder.id, builder.title, builder.description, builder.price, builder.discountPercentage,
-                builder.rating, builder.stock, builder.brand, builder.category, builder.thumbnail, builder.image);
+        this(builder.id, builder.title, builder.description, builder.price, builder.stock, builder.brand,
+                builder.category, builder.thumbnail, builder.image);
     }
 
     public static Builder builder() {
@@ -31,8 +28,6 @@ public static class Builder {
         private String title;
         private String description;
         private double price;
-        private double discountPercentage;
-        private double rating;
         private int stock;
         private String brand;
         private String category;
@@ -56,16 +51,6 @@ public static class Builder {
 
         public Builder price(double price) {
             this.price = price;
-            return this;
-        }
-
-        public Builder discountPercentage(double discountPercentage) {
-            this.discountPercentage = discountPercentage;
-            return this;
-        }
-
-        public Builder rating(double rating) {
-            this.rating = rating;
             return this;
         }
 

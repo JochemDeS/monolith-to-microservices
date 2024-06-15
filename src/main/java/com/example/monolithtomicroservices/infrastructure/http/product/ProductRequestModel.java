@@ -1,7 +1,6 @@
 package com.example.monolithtomicroservices.infrastructure.http.product;
 
 import com.example.monolithtomicroservices.domain.PriceRange;
-import com.example.monolithtomicroservices.domain.RatingRange;
 import jakarta.annotation.Nullable;
 
 import java.util.Optional;
@@ -9,8 +8,7 @@ import java.util.Optional;
 public record ProductRequestModel(
         @Nullable String category,
         @Nullable String brand,
-        @Nullable PriceRange priceRange,
-        @Nullable RatingRange ratingRange
+        @Nullable PriceRange priceRange
 ) {
     public ProductRequestModel {
         category = Optional.ofNullable(category)

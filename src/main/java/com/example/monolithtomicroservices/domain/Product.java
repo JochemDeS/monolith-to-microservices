@@ -1,10 +1,10 @@
 package com.example.monolithtomicroservices.domain;
 
-public record Product(ProductId id, String title, String description, double price, double discountPercentage,
-                      double rating, int stock, Brand brand, Category category, String thumbnail, String image
+public record Product(ProductId id, String title, String description, double price,
+                      int stock, Brand brand, Category category, String thumbnail, String image
 ) {
     private Product(Builder builder) {
-        this(builder.id, builder.title, builder.description, builder.price, builder.discountPercentage, builder.rating,
+        this(builder.id, builder.title, builder.description, builder.price,
              builder.stock, builder.brand, builder.category, builder.thumbnail, builder.image);
     }
     public static Builder builder() {
@@ -16,8 +16,6 @@ public record Product(ProductId id, String title, String description, double pri
         private String title;
         private String description;
         private double price;
-        private double discountPercentage;
-        private double rating;
         private int stock;
         private Brand brand;
         private Category category;
@@ -41,16 +39,6 @@ public record Product(ProductId id, String title, String description, double pri
 
         public Builder price(double price) {
             this.price = price;
-            return this;
-        }
-
-        public Builder discountPercentage(double discountPercentage) {
-            this.discountPercentage = discountPercentage;
-            return this;
-        }
-
-        public Builder rating(double rating) {
-            this.rating = rating;
             return this;
         }
 

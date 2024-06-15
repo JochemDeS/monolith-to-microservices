@@ -1,19 +1,16 @@
 package com.example.monolithtomicroservices.application.product;
 
 import com.example.monolithtomicroservices.domain.PriceRange;
-import com.example.monolithtomicroservices.domain.RatingRange;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 public record ProductRequest(
         String category,
         String brand,
         PriceRange priceRange,
-        RatingRange ratingRange,
         Pageable pageable
 ) {
     private ProductRequest(final Builder builder) {
-        this(builder.category, builder.brand, builder.priceRange, builder.ratingRange, builder.pageable);
+        this(builder.category, builder.brand, builder.priceRange, builder.pageable);
     }
 
     public static Builder builder() {
@@ -24,7 +21,6 @@ public record ProductRequest(
         private String category;
         private String brand;
         private PriceRange priceRange;
-        private RatingRange ratingRange;
         private Pageable pageable;
 
         public Builder category(String category) {
@@ -39,11 +35,6 @@ public record ProductRequest(
 
         public Builder priceRange(PriceRange priceRange) {
             this.priceRange = priceRange;
-            return this;
-        }
-
-        public Builder ratingRange(RatingRange ratingRange) {
-            this.ratingRange = ratingRange;
             return this;
         }
 

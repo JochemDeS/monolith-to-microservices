@@ -1,7 +1,6 @@
 package com.example.monolithtomicroservices.infrastructure.persistence.product;
 
 import com.example.monolithtomicroservices.domain.PriceRange;
-import com.example.monolithtomicroservices.domain.RatingRange;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
@@ -23,10 +22,6 @@ public class ProductSpecs {
 
     public static Specification<ProductEntity> byPriceRange(PriceRange priceRange) {
         return createSpec(priceRange, (root, criteriaBuilder) -> criteriaBuilder.between(root.get("rating"), priceRange.min(), priceRange.max()));
-    }
-
-    public static Specification<ProductEntity> byRatingRange(RatingRange ratingRange) {
-        return createSpec(ratingRange, (root, criteriaBuilder) -> criteriaBuilder.between(root.get("rating"), ratingRange.min(), ratingRange.max()));
     }
 
     private static <T> Specification<ProductEntity> createSpec(T value, BiFunction<Root<ProductEntity>, CriteriaBuilder, Predicate> function) {

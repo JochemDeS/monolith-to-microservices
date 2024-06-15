@@ -1,7 +1,7 @@
 package com.example.monolithtomicroservices.domain;
 
-public record ShoppingCartId(long id) {
-    private ShoppingCartId(Builder builder) {
+public record CartId(long id) {
+    private CartId(Builder builder) {
         this(builder.id);
     }
 
@@ -17,8 +17,8 @@ public record ShoppingCartId(long id) {
             return this;
         }
 
-        public ShoppingCartId build() {
-            return new ShoppingCartId(this);
+        public CartId build() {
+            return new CartId(this);
         }
     }
 }
