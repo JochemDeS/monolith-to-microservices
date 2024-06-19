@@ -6,18 +6,21 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RegisterUserUseCase implements UseCase<RegisterUserRequest, User> {
+    private final EncryptionService encryptionService;
     private final GetUserPort getUserPort;
     private final SaveUserPort saveUserPort;
 
-    public RegisterUserUseCase(GetUserPort getUserPort, SaveUserPort saveUserPort) {
+    public RegisterUserUseCase(EncryptionService encryptionService, GetUserPort getUserPort, SaveUserPort saveUserPort) {
+        this.encryptionService = encryptionService;
         this.getUserPort = getUserPort;
         this.saveUserPort = saveUserPort;
     }
 
     public User handle(RegisterUserRequest request) {
+        final var encryptedPassword = encryptionService.encrypt(request.password());
         final var user = User.builder()
                 .username(request.username())
-                .password(request.password())
+                .password(encryptedPassword)
                 .email(request.email())
                 .name(request.name())
                 .build();

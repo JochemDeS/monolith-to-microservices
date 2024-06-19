@@ -15,3 +15,7 @@ spring:
     web:
       pageable:
         default-page-size: 20
+
+encryption:
+  salt:
+    rounds: 10
