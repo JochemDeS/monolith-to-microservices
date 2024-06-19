@@ -1,6 +1,7 @@
 package com.example.monolithtomicroservices.infrastructure.persistence.customer;
 
 import com.example.monolithtomicroservices.application.customer.GetCustomerByEmailPort;
+import com.example.monolithtomicroservices.application.customer.GetCustomerByIdPort;
 import com.example.monolithtomicroservices.application.customer.SaveCustomerPort;
 import com.example.monolithtomicroservices.domain.*;
 import com.example.monolithtomicroservices.infrastructure.persistence.address.AddressEntity;
@@ -10,13 +11,19 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class CustomerSqlPersistenceAdapter implements GetCustomerByEmailPort, SaveCustomerPort {
+public class CustomerSqlPersistenceAdapter implements GetCustomerByIdPort, GetCustomerByEmailPort, SaveCustomerPort {
     private final CustomerRepository customerRepository;
     private final AddressSqlPersistenceAdapter addressSqlPersistenceAdapter;
 
     public CustomerSqlPersistenceAdapter(CustomerRepository customerRepository, AddressSqlPersistenceAdapter addressSqlPersistenceAdapter) {
         this.customerRepository = customerRepository;
         this.addressSqlPersistenceAdapter = addressSqlPersistenceAdapter;
+    }
+
+    @Override
+    public Optional<Customer> byId(CustomerId id) {
+        return customerRepository.findById(id.id())
+                .map(this::mapToCustomer);
     }
 
     @Override

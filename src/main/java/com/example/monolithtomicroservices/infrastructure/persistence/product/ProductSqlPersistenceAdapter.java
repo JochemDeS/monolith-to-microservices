@@ -2,6 +2,7 @@ package com.example.monolithtomicroservices.infrastructure.persistence.product;
 
 import com.example.monolithtomicroservices.application.product.GetAllProductsPort;
 import com.example.monolithtomicroservices.application.product.GetProductByIdPort;
+import com.example.monolithtomicroservices.application.product.GetProductsByIdInPort;
 import com.example.monolithtomicroservices.application.product.ProductRequest;
 import com.example.monolithtomicroservices.domain.*;
 import com.example.monolithtomicroservices.infrastructure.persistence.brand.BrandEntity;
@@ -10,11 +11,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 
 @Component
-public class ProductSqlPersistenceAdapter implements GetAllProductsPort, GetProductByIdPort {
+public class ProductSqlPersistenceAdapter implements GetAllProductsPort, GetProductByIdPort, GetProductsByIdInPort {
     private final ProductRepository productRepository;
 
     public ProductSqlPersistenceAdapter(ProductRepository productRepository) {
@@ -27,6 +29,17 @@ public class ProductSqlPersistenceAdapter implements GetAllProductsPort, GetProd
                         .and(ProductSpecs.byBrand(request.brand()))
                         .and(ProductSpecs.byPriceRange(request.priceRange()));
         return productRepository.findAll(specification, request.pageable()).map(this::toDomain);
+    }
+
+    @Override
+    public Optional<Product> byId(ProductId id) {
+        return productRepository.findById(id.id()).map(this::toDomain);
+    }
+
+    @Override
+    public List<Product> byIdIn(List<ProductId> productIds) {
+        final var ids = productIds.stream().map(ProductId::id).toList();
+        return productRepository.findAllByIdIn(ids).stream().map(this::toDomain).toList();
     }
 
     private Product toDomain(ProductEntity productEntity) {
@@ -43,11 +56,6 @@ public class ProductSqlPersistenceAdapter implements GetAllProductsPort, GetProd
                 .thumbnail(productEntity.getThumbnail())
                 .image(productEntity.getImage())
                 .build();
-    }
-
-    @Override
-    public Optional<Product> byId(ProductId id) {
-        return productRepository.findById(id.id()).map(this::toDomain);
     }
 
     private Category toDomain(CategoryEntity categoryEntity) {
