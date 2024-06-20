@@ -1,4 +1,4 @@
-package com.example.monolithtomicroservices.application.auth;
+package com.example.monolithtomicroservices.security;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;

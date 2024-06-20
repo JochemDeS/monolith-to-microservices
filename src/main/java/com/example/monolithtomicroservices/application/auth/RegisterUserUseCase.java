@@ -2,6 +2,7 @@ package com.example.monolithtomicroservices.application.auth;
 
 import com.example.monolithtomicroservices.application.common.UseCase;
 import com.example.monolithtomicroservices.domain.User;
+import com.example.monolithtomicroservices.security.EncryptionService;
 import org.springframework.stereotype.Service;
 
 @Service

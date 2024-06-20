@@ -6,10 +6,8 @@ import com.example.monolithtomicroservices.application.common.UseCase;
 import com.example.monolithtomicroservices.domain.Name;
 import com.example.monolithtomicroservices.domain.User;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -48,6 +46,16 @@ public class AuthenticationController {
 
         return LoginUserReadModel.builder()
                 .token(jwt)
+                .build();
+    }
+
+    @GetMapping("/me")
+    public DetailedUserModel getLoggedInUser(@AuthenticationPrincipal User user) {
+        return DetailedUserModel.builder()
+                .firstName(user.name().firstName())
+                .lastName(user.name().lastName())
+                .email(user.email())
+                .username(user.username())
                 .build();
     }
 }

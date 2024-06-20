@@ -1,6 +1,8 @@
 package com.example.monolithtomicroservices.application.auth;
 
 import com.example.monolithtomicroservices.application.common.UseCase;
+import com.example.monolithtomicroservices.security.EncryptionService;
+import com.example.monolithtomicroservices.security.JwtService;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 

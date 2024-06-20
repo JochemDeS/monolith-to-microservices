@@ -1,4 +1,4 @@
-package com.example.monolithtomicroservices.application.auth;
+package com.example.monolithtomicroservices.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -32,5 +32,14 @@ public class JwtService {
                 .withExpiresAt(new Date(System.currentTimeMillis() + (1000 * expiration)))
                 .withIssuer(issuer)
                 .sign(algorithm);
+    }
+
+    public String getUsernameFromJWT(String token) {
+        return JWT.require(algorithm)
+                .withIssuer(issuer)
+                .build()
+                .verify(token)
+                .getClaim(USERNAME_CLAIM)
+                .asString();
     }
 }
