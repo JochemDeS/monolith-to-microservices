@@ -4,6 +4,7 @@ import com.example.monolithtomicroservices.application.exception.ResourceNotFoun
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -44,6 +45,12 @@ public class GlobalExceptionHandler {
     public final ResponseEntity<Map<String, List<String>>> handleRuntimeExceptions(RuntimeException ex) {
         List<String> errors = Collections.singletonList(ex.getMessage());
         return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public final ResponseEntity<Map<String, List<String>>> handleAccessDeniedExceptions(AccessDeniedException ex) {
+        List<String> errors = Collections.singletonList(ex.getMessage());
+        return new ResponseEntity<>(new HttpHeaders(), HttpStatus.UNAUTHORIZED);
     }
 
     private Map<String, List<String>> getErrorsMap(List<String> errors) {

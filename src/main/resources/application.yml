@@ -19,3 +19,9 @@ spring:
 encryption:
   salt:
     rounds: 10
+
+jwt:
+  algorithm:
+    key: MySecretKeyThatIsNotStoredInSourceControl
+  issuer: monolith-to-microservices
+  expiration: 604800

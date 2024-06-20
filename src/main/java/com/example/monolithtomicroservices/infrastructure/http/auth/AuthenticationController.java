@@ -1,5 +1,6 @@
 package com.example.monolithtomicroservices.infrastructure.http.auth;
 
+import com.example.monolithtomicroservices.application.auth.LoginUserRequest;
 import com.example.monolithtomicroservices.application.auth.RegisterUserRequest;
 import com.example.monolithtomicroservices.application.common.UseCase;
 import com.example.monolithtomicroservices.domain.Name;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthenticationController {
     private final UseCase<RegisterUserRequest, User> registerUserUseCase;
+    private final UseCase<LoginUserRequest, String> loginUserUseCase;
 
-    public AuthenticationController(UseCase<RegisterUserRequest, User> registerUserUseCase) {
+    public AuthenticationController(UseCase<RegisterUserRequest, User> registerUserUseCase, UseCase<LoginUserRequest, String> loginUserUseCase) {
         this.registerUserUseCase = registerUserUseCase;
+        this.loginUserUseCase = loginUserUseCase;
     }
 
     @PostMapping("/register")
@@ -32,5 +35,19 @@ public class AuthenticationController {
                 .build();
 
         registerUserUseCase.handle(registerUser);
+    }
+
+    @PostMapping("/login")
+    public LoginUserReadModel login(@Valid @RequestBody LoginUserWriteModel request) {
+        final var loginUser = LoginUserRequest.builder()
+                .username(request.username())
+                .password(request.password())
+                .build();
+
+        final var jwt = loginUserUseCase.handle(loginUser);
+
+        return LoginUserReadModel.builder()
+                .token(jwt)
+                .build();
     }
 }
