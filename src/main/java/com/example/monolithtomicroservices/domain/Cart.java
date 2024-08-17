@@ -12,11 +12,11 @@ public record Cart(List<CartItem> items) {
     }
 
     public void remove(CartItemId itemId) {
-        items.stream().filter(item -> item.id().equals(itemId)).findFirst().ifPresent(items::remove);
+//        items.stream().filter(item -> item.id().equals(itemId)).findFirst().ifPresent(items::remove);
     }
 
     public void update(CartItem item) {
-        remove(item.id());
+        remove(item.getId());
         add(item);
     }
 
@@ -25,11 +25,11 @@ public record Cart(List<CartItem> items) {
     }
 
     public double getTotalPrice() {
-        return items.stream().mapToDouble(item -> item.product().price() * item.quantity()).sum();
+        return items.stream().mapToDouble(item -> item.getProduct().price() * item.getQuantity()).sum();
     }
 
     public int getTotalNumberOfItems() {
-        return items.stream().mapToInt(CartItem::quantity).sum();
+        return items.stream().mapToInt(CartItem::getQuantity).sum();
     }
 
     public static Builder builder() {

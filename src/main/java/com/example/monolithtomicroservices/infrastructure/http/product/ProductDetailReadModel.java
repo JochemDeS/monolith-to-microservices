@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import org.hibernate.validator.constraints.URL;
 
-public record ProductDetailReadModel(@Positive @Schema(description = "Product id", defaultValue = "4") long id,
+public record ProductDetailReadModel(@Positive @Schema(description = "Product value", defaultValue = "4") long id,
                                      @NotBlank @Schema(description = "Name of product", defaultValue = "Iphone X") String title,
                                      @NotBlank @Schema(description = "Description of the product", defaultValue = "Made by Apple") String description,
                                      @Positive @Schema(description = "Price of the product", defaultValue = "1250.99") double price,

@@ -1,7 +1,7 @@
 //package com.example.monolithtomicroservices.application.customer;
 //
 //import com.example.monolithtomicroservices.application.cart.GetCartByCustomerIdPort;
-//import com.example.monolithtomicroservices.application.cart.SaveCartItemPort;
+//import com.example.monolithtomicroservices.application.cart.item.SaveCartItemPort;
 //import com.example.monolithtomicroservices.application.common.UseCase;
 //import com.example.monolithtomicroservices.application.product.GetProductByIdPort;
 //import com.example.monolithtomicroservices.application.product.GetProductsByIdInPort;
@@ -39,7 +39,7 @@
 //                .quantity(request.cartItem().quantity())
 //                .build();
 //
-//        saveCartItemPort.save(customer.id(), request.cartItem());
+//        saveCartItemPort.save(customer.value(), request.cartItem());
 //        return null;
 //    }
 //

@@ -10,7 +10,7 @@ public class FakeGetProductByIdUseCase implements UseCase<ProductId, Product> {
 
     @Override
     public Product handle(ProductId request) {
-        if (request.id() == product.id().id())
+        if (request.value() == product.id().value())
             return product;
         else
             throw new ResourceNotFoundException("Product not found");

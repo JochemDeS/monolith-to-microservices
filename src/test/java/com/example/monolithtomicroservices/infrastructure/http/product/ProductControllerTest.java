@@ -44,7 +44,7 @@ class ProductControllerTest {
 //                        {
 //                          "products": [
 //                            {
-//                              "id": %d,
+//                              "value": %d,
 //                              "title": "%s",
 //                              "description": "%s",
 //                              "price": %f,
@@ -60,7 +60,7 @@ class ProductControllerTest {
 //                          "totalProducts": %d
 //                        }
 //                        """.formatted(
-//                                expected.id().id(),
+//                                expected.value().value(),
 //                                expected.title(),
 //                                expected.description(),
 //                                expected.price(),
@@ -80,7 +80,7 @@ class ProductControllerTest {
         fakeGetProductByIdUseCase.setProduct(products.getFirst());
 
         final var expected = products.getFirst();
-        mockMvc.perform(get("/products/%d".formatted(expected.id().id())))
+        mockMvc.perform(get("/products/%d".formatted(expected.id().value())))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -99,7 +99,7 @@ class ProductControllerTest {
                           "image": "%s"
                         }
                         """.formatted(
-                                expected.id().id(),
+                                expected.id().value(),
                                 expected.title(),
                                 expected.description(),
                                 expected.price(),

@@ -1,7 +1,7 @@
 package com.example.monolithtomicroservices.application.auth;
 
 public record LoginUserRequest(String username, String password) {
-    private LoginUserRequest(final Builder builder) {
+    private LoginUserRequest(Builder builder) {
         this(builder.username, builder.password);
     }
 
@@ -12,9 +12,6 @@ public record LoginUserRequest(String username, String password) {
     public static final class Builder {
         private String username;
         private String password;
-
-        private Builder() {
-        }
 
         public Builder username(final String username) {
             this.username = username;

@@ -1,8 +1,8 @@
 package com.example.monolithtomicroservices.domain;
 
-public record CartItemId(long id) {
+public record CartItemId(long value) {
     private CartItemId(Builder builder) {
-        this(builder.id);
+        this(builder.value);
     }
 
     public static Builder builder() {
@@ -10,10 +10,15 @@ public record CartItemId(long id) {
     }
 
     public static class Builder {
-        private long id;
+        private long value;
 
-        public Builder id(long id) {
-            this.id = id;
+        public Builder value(long id) {
+            this.value = id;
+            return this;
+        }
+
+        public Builder value(String id) {
+            this.value = Long.parseLong(id);
             return this;
         }
 

@@ -5,10 +5,11 @@ public record User(
         String username,
         String password,
         String email,
-        Name name
+        Name name,
+        Cart cart
 ) {
     public User(final Builder builder) {
-        this(builder.id, builder.username, builder.password, builder.email, builder.name);
+        this(builder.id, builder.username, builder.password, builder.email, builder.name, builder.cart);
     }
 
     public static Builder builder() {
@@ -21,6 +22,7 @@ public record User(
         private String password;
         private String email;
         private Name name;
+        private Cart cart = Cart.builder().build();
 
         public Builder id(UserId id) {
             this.id = id;
@@ -44,6 +46,11 @@ public record User(
 
         public Builder name(Name name) {
             this.name = name;
+            return this;
+        }
+
+        public Builder cart(Cart cart) {
+            this.cart = cart;
             return this;
         }
 

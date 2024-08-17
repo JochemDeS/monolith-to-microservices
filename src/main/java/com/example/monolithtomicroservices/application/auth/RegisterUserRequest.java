@@ -3,7 +3,7 @@ package com.example.monolithtomicroservices.application.auth;
 import com.example.monolithtomicroservices.domain.Name;
 
 public record RegisterUserRequest(String username, String password, String email, Name name) {
-    public RegisterUserRequest(final Builder builder) {
+    public RegisterUserRequest(Builder builder) {
         this(builder.username, builder.password, builder.email, builder.name);
     }
 

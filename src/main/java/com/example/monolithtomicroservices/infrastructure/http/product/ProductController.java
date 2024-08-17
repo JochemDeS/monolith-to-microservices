@@ -49,7 +49,7 @@ public class ProductController {
     @GetMapping("/{id}")
     public ProductDetailReadModel getProduct(@PathVariable String id) {
         final var productId = ProductId.builder()
-                .id(id)
+                .value(Long.parseLong(id))
                 .build();
 
         final var product = getProductByIdUseCase.handle(productId);
@@ -58,7 +58,7 @@ public class ProductController {
 
     private ProductReadModel mapToProductReadModel(Product product) {
         return ProductReadModel.builder()
-                .id(product.id().id())
+                .id(product.id().value())
                 .title(product.title())
                 .description(product.description())
                 .price(product.price())
@@ -70,7 +70,7 @@ public class ProductController {
 
     private ProductDetailReadModel mapToProductDetailModel(Product product) {
         return ProductDetailReadModel.builder()
-                .id(product.id().id())
+                .id(product.id().value())
                 .title(product.title())
                 .description(product.description())
                 .price(product.price())

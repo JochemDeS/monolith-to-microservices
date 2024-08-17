@@ -5,8 +5,7 @@ import com.example.monolithtomicroservices.application.product.GetProductByIdPor
 import com.example.monolithtomicroservices.application.product.GetProductsByIdInPort;
 import com.example.monolithtomicroservices.application.product.ProductRequest;
 import com.example.monolithtomicroservices.domain.*;
-import com.example.monolithtomicroservices.infrastructure.persistence.brand.BrandEntity;
-import com.example.monolithtomicroservices.infrastructure.persistence.category.CategoryEntity;
+import com.example.monolithtomicroservices.infrastructure.persistence.ProductMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
@@ -28,51 +27,17 @@ public class ProductSqlPersistenceAdapter implements GetAllProductsPort, GetProd
         Specification<ProductEntity> specification = Specification.where(ProductSpecs.byCategory(request.category()))
                         .and(ProductSpecs.byBrand(request.brand()))
                         .and(ProductSpecs.byPriceRange(request.priceRange()));
-        return productRepository.findAll(specification, request.pageable()).map(this::toDomain);
+        return productRepository.findAll(specification, request.pageable()).map(ProductMapper::mapToProduct);
     }
 
     @Override
     public Optional<Product> byId(ProductId id) {
-        return productRepository.findById(id.id()).map(this::toDomain);
+        return productRepository.findById(id.value()).map(ProductMapper::mapToProduct);
     }
 
     @Override
     public List<Product> byIdIn(List<ProductId> productIds) {
-        final var ids = productIds.stream().map(ProductId::id).toList();
-        return productRepository.findAllByIdIn(ids).stream().map(this::toDomain).toList();
-    }
-
-    private Product toDomain(ProductEntity productEntity) {
-        return Product.builder()
-                .id(ProductId.builder()
-                        .id(productEntity.getId())
-                        .build())
-                .title(productEntity.getTitle())
-                .description(productEntity.getDescription())
-                .price(productEntity.getPrice())
-                .stock(productEntity.getStock())
-                .brand(toDomain(productEntity.getBrand()))
-                .category(toDomain(productEntity.getCategory()))
-                .thumbnail(productEntity.getThumbnail())
-                .image(productEntity.getImage())
-                .build();
-    }
-
-    private Category toDomain(CategoryEntity categoryEntity) {
-        return Category.builder()
-                .id(CategoryId.builder()
-                        .id(categoryEntity.getId())
-                        .build())
-                .name(categoryEntity.getName())
-                .build();
-    }
-
-    private Brand toDomain(BrandEntity brandEntity) {
-        return Brand.builder()
-                .id(BrandId.builder()
-                        .id(brandEntity.getId())
-                        .build())
-                .name(brandEntity.getName())
-                .build();
+        final var ids = productIds.stream().map(ProductId::value).toList();
+        return productRepository.findAllByIdIn(ids).stream().map(ProductMapper::mapToProduct).toList();
     }
 }

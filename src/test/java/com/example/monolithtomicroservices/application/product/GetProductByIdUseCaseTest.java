@@ -14,7 +14,7 @@ class GetProductByIdUseCaseTest {
     void shouldReturnProductById() {
         final var target = new GetProductByIdUseCase(fakeGetProductByIdPort);
         final var expected = ProductId.builder()
-                .id(1L)
+                .value(1L)
                 .build();
 
         final var result = target.handle(expected);
@@ -27,7 +27,7 @@ class GetProductByIdUseCaseTest {
     void shouldThrowExceptionWhenProductNotFound() {
         final var target = new GetProductByIdUseCase(fakeGetProductByIdPort);
         final var expected = ProductId.builder()
-                .id(99L)
+                .value(99L)
                 .build();
 
         assertThatThrownBy(() -> target.handle(expected)).isInstanceOf(ResourceNotFoundException.class);
