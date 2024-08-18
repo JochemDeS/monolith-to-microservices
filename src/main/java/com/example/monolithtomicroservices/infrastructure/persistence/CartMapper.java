@@ -1,9 +1,10 @@
 package com.example.monolithtomicroservices.infrastructure.persistence;
 
-import com.example.monolithtomicroservices.domain.Cart;
-import com.example.monolithtomicroservices.domain.CartItem;
-import com.example.monolithtomicroservices.domain.CartItemId;
+import com.example.monolithtomicroservices.domain.*;
 import com.example.monolithtomicroservices.infrastructure.persistence.cart.CartEntity;
+import com.example.monolithtomicroservices.infrastructure.persistence.cart.CartItemEntity;
+
+import java.util.stream.Collectors;
 
 
 public class CartMapper {
@@ -13,14 +14,36 @@ public class CartMapper {
                         .id(CartItemId.builder()
                                 .value(item.getId())
                                 .build())
-                        .product(ProductMapper.mapToProduct(item.getProduct()))
+                        .product(ProductMapper.toDomain(item.getProduct()))
                         .quantity(item.getQuantity())
                         .build()
                 )
-                .toList();
+                .collect(Collectors.toList());
 
         return Cart.builder()
+                .id(CartId.builder()
+                        .value(cartEntity.getId())
+                        .build())
                 .items(items)
                 .build();
+    }
+
+    public static CartEntity toEntity(Cart cart, User user) {
+        final var cartEntity = CartEntity.builder()
+                .id(cart.getId().value())
+                .user(UserMapper.toEntity(user))
+                .build();
+
+        final var items = cart.getItems().stream()
+                .map(item -> CartItemEntity.builder()
+                        .cart(cartEntity)
+                        .product(ProductMapper.toEntity(item.getProduct()))
+                        .quantity(item.getQuantity())
+                        .build())
+                .collect(Collectors.toList());
+
+        cartEntity.setItems(items);
+
+        return cartEntity;
     }
 }

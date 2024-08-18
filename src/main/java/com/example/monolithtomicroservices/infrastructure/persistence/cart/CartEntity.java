@@ -1,6 +1,5 @@
 package com.example.monolithtomicroservices.infrastructure.persistence.cart;
 
-import com.example.monolithtomicroservices.infrastructure.persistence.cart.item.CartItemEntity;
 import com.example.monolithtomicroservices.infrastructure.persistence.user.UserEntity;
 import jakarta.persistence.*;
 
@@ -20,7 +19,7 @@ public class CartEntity {
     @Column
     private LocalDateTime updatedAt;
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<CartItemEntity> items = new ArrayList<>();
+    private List<CartItemEntity> items;
 
     public CartEntity() {
     }
@@ -30,6 +29,7 @@ public class CartEntity {
         this.user = builder.user;
         this.createdAt = builder.createdAt;
         this.updatedAt = builder.updatedAt;
+        this.items = builder.items;
     }
 
     public long getId() {
@@ -52,6 +52,10 @@ public class CartEntity {
         return items;
     }
 
+    public void setItems(List<CartItemEntity> items) {
+        this.items = items;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -61,6 +65,7 @@ public class CartEntity {
         private UserEntity user;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
+        private List<CartItemEntity> items = new ArrayList<>();
 
         public Builder id(long id) {
             this.id = id;
@@ -79,6 +84,11 @@ public class CartEntity {
 
         public Builder updatedAt(LocalDateTime updatedAt) {
             this.updatedAt = updatedAt;
+            return this;
+        }
+
+        public Builder items(List<CartItemEntity> items) {
+            this.items = items;
             return this;
         }
 

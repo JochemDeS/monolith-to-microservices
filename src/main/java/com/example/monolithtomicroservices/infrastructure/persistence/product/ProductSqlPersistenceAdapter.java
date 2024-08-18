@@ -27,17 +27,17 @@ public class ProductSqlPersistenceAdapter implements GetAllProductsPort, GetProd
         Specification<ProductEntity> specification = Specification.where(ProductSpecs.byCategory(request.category()))
                         .and(ProductSpecs.byBrand(request.brand()))
                         .and(ProductSpecs.byPriceRange(request.priceRange()));
-        return productRepository.findAll(specification, request.pageable()).map(ProductMapper::mapToProduct);
+        return productRepository.findAll(specification, request.pageable()).map(ProductMapper::toDomain);
     }
 
     @Override
     public Optional<Product> byId(ProductId id) {
-        return productRepository.findById(id.value()).map(ProductMapper::mapToProduct);
+        return productRepository.findById(id.value()).map(ProductMapper::toDomain);
     }
 
     @Override
     public List<Product> byIdIn(List<ProductId> productIds) {
         final var ids = productIds.stream().map(ProductId::value).toList();
-        return productRepository.findAllByIdIn(ids).stream().map(ProductMapper::mapToProduct).toList();
+        return productRepository.findAllByIdIn(ids).stream().map(ProductMapper::toDomain).toList();
     }
 }

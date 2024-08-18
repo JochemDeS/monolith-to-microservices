@@ -1,6 +1,5 @@
-package com.example.monolithtomicroservices.infrastructure.persistence.cart.item;
+package com.example.monolithtomicroservices.infrastructure.persistence.cart;
 
-import com.example.monolithtomicroservices.infrastructure.persistence.cart.CartEntity;
 import com.example.monolithtomicroservices.infrastructure.persistence.product.ProductEntity;
 import jakarta.persistence.*;
 

@@ -3,7 +3,7 @@ package com.example.monolithtomicroservices.domain;
 public class CartItem {
     private final CartItemId id;
     private final Product product;
-    private final int quantity;
+    private int quantity;
 
     public CartItem(CartItemId id, Product product, int quantity) {
         this.id = id;
@@ -21,6 +21,10 @@ public class CartItem {
 
     public int getQuantity() {
         return quantity;
+    }
+
+public void increaseQuantity(int quantity) {
+        this.quantity += quantity;
     }
 
     public static Builder builder() {
