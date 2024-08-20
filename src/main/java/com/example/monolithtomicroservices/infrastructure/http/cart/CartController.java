@@ -1,6 +1,7 @@
 package com.example.monolithtomicroservices.infrastructure.http.cart;
 
 import com.example.monolithtomicroservices.application.cart.GetCartUseCase;
+import com.example.monolithtomicroservices.application.cart.ResetCartUseCase;
 import com.example.monolithtomicroservices.application.cart.UpdateCart;
 import com.example.monolithtomicroservices.application.cart.UpdateCartUseCase;
 import com.example.monolithtomicroservices.domain.ProductId;
@@ -14,10 +15,12 @@ import org.springframework.web.bind.annotation.*;
 public class CartController {
     private final GetCartUseCase getCartUseCase;
     private final UpdateCartUseCase updateCartUseCase;
+    private final ResetCartUseCase resetCartUseCase;
 
-    public CartController(GetCartUseCase getCartUseCase, UpdateCartUseCase updateCartUseCase) {
+    public CartController(GetCartUseCase getCartUseCase, UpdateCartUseCase updateCartUseCase, ResetCartUseCase resetCartUseCase) {
         this.getCartUseCase = getCartUseCase;
         this.updateCartUseCase = updateCartUseCase;
+        this.resetCartUseCase = resetCartUseCase;
     }
 
     @GetMapping
@@ -50,5 +53,10 @@ public class CartController {
                 .build();
 
         updateCartUseCase.handle(addCartItem);
+    }
+
+    @DeleteMapping
+    public void reset(@AuthenticationPrincipal User user) {
+        resetCartUseCase.handle(user);
     }
 }
