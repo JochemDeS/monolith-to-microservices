@@ -31,7 +31,11 @@ public class UpdateCartUseCase implements UseCase<UpdateCart, Void> {
                         .quantity(request.quantity())
                         .build();
 
-        cart.add(item);
+        if (request.quantity() == 0) {
+            cart.remove(item);
+        } else {
+            cart.add(item);
+        }
 
         updateCartPort.update(cart, request.user());
         return null;

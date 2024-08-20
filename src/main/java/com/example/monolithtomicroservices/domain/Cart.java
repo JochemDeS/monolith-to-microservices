@@ -22,13 +22,11 @@ public class Cart {
                 () -> items.add(item));
     }
 
-    public void remove(CartItemId itemId) {
-//        items.stream().filter(item -> item.id().equals(itemId)).findFirst().ifPresent(items::remove);
-    }
-
-    public void update(CartItem item) {
-        remove(item.getId());
-        add(item);
+    public void remove(CartItem item) {
+        items.stream()
+                .filter(cartItem -> cartItem.getProduct().id().equals(item.getProduct().id()))
+                .findFirst()
+                .ifPresent(items::remove);
     }
 
     public void reset() {
