@@ -1,6 +1,5 @@
 package com.example.monolithtomicroservices.infrastructure.persistence.product;
 
-import com.example.monolithtomicroservices.domain.ProductId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

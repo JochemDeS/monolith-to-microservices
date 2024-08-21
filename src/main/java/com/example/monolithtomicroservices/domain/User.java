@@ -1,15 +1,19 @@
 package com.example.monolithtomicroservices.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public record User(
         UserId id,
         String username,
         String password,
         String email,
         Name name,
-        Cart cart
+        Cart cart,
+        List<Order> orders
 ) {
     public User(final Builder builder) {
-        this(builder.id, builder.username, builder.password, builder.email, builder.name, builder.cart);
+        this(builder.id, builder.username, builder.password, builder.email, builder.name, builder.cart, builder.orders);
     }
 
     public static Builder builder() {
@@ -23,6 +27,7 @@ public record User(
         private String email;
         private Name name;
         private Cart cart = Cart.builder().build();
+        private List<Order> orders = new ArrayList<>();
 
         public Builder id(UserId id) {
             this.id = id;
@@ -51,6 +56,11 @@ public record User(
 
         public Builder cart(Cart cart) {
             this.cart = cart;
+            return this;
+        }
+
+        public Builder orders(List<Order> orders) {
+            this.orders = orders;
             return this;
         }
 
