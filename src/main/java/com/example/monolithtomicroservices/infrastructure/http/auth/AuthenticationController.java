@@ -5,12 +5,14 @@ import com.example.monolithtomicroservices.application.auth.RegisterUserRequest;
 import com.example.monolithtomicroservices.application.common.UseCase;
 import com.example.monolithtomicroservices.domain.Name;
 import com.example.monolithtomicroservices.domain.User;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
+@Tag(name = "Authentication", description = "All endpoints for authentication")
 public class AuthenticationController {
     private final UseCase<RegisterUserRequest, User> registerUserUseCase;
     private final UseCase<LoginUserRequest, String> loginUserUseCase;

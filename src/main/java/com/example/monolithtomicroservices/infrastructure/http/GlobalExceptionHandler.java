@@ -48,8 +48,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public final ResponseEntity<Map<String, List<String>>> handleAccessDeniedExceptions(AccessDeniedException ex) {
-        List<String> errors = Collections.singletonList(ex.getMessage());
+    public final ResponseEntity<Map<String, List<String>>> handleAccessDeniedExceptions() {
         return new ResponseEntity<>(new HttpHeaders(), HttpStatus.UNAUTHORIZED);
     }
 

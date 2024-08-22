@@ -6,12 +6,17 @@ import com.example.monolithtomicroservices.application.cart.UpdateCart;
 import com.example.monolithtomicroservices.application.cart.UpdateCartUseCase;
 import com.example.monolithtomicroservices.domain.ProductId;
 import com.example.monolithtomicroservices.domain.User;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/cart")
+@Tag(name = "Cart", description = "All endpoints for the cart")
 public class CartController {
     private final GetCartUseCase getCartUseCase;
     private final UpdateCartUseCase updateCartUseCase;
@@ -42,12 +47,14 @@ public class CartController {
                 .build();
     }
 
-    @PostMapping
-    public void update(@AuthenticationPrincipal User user, @Valid @RequestBody UpdateCartModel request) {
+    @PostMapping("/{productId}")
+    public void update(@AuthenticationPrincipal User user,
+                       @PathVariable @NotNull @Positive int productId,
+                       @Valid @RequestBody UpdateCartModel request) {
         final var addCartItem = UpdateCart.builder()
                 .user(user)
                 .productId(ProductId.builder()
-                        .value(request.productId())
+                        .value(productId)
                         .build())
                 .quantity(request.quantity())
                 .build();
@@ -55,7 +62,7 @@ public class CartController {
         updateCartUseCase.handle(addCartItem);
     }
 
-    @DeleteMapping
+    @PostMapping("/reset")
     public void reset(@AuthenticationPrincipal User user) {
         resetCartUseCase.handle(user);
     }

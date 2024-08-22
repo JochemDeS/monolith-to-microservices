@@ -2,8 +2,10 @@ package com.example.monolithtomicroservices.infrastructure.persistence.order;
 
 import com.example.monolithtomicroservices.application.order.GetOrderByIdPort;
 import com.example.monolithtomicroservices.application.order.GetOrdersByUserIdPort;
+import com.example.monolithtomicroservices.application.order.SaveOrderPort;
 import com.example.monolithtomicroservices.domain.Order;
 import com.example.monolithtomicroservices.domain.OrderId;
+import com.example.monolithtomicroservices.domain.User;
 import com.example.monolithtomicroservices.domain.UserId;
 import com.example.monolithtomicroservices.infrastructure.persistence.OrderMapper;
 import org.springframework.data.domain.Page;
@@ -15,7 +17,7 @@ import java.util.Optional;
 
 
 @Component
-public class OrderSqlPersistenceAdapter implements GetOrdersByUserIdPort, GetOrderByIdPort {
+public class OrderSqlPersistenceAdapter implements GetOrdersByUserIdPort, GetOrderByIdPort, SaveOrderPort {
     private final OrderRepository orderRepository;
 
     public OrderSqlPersistenceAdapter(OrderRepository orderRepository) {
@@ -37,5 +39,12 @@ public class OrderSqlPersistenceAdapter implements GetOrdersByUserIdPort, GetOrd
     public Optional<Order> getOrderById(OrderId orderId) {
         return orderRepository.findById(orderId.value())
                 .map(OrderMapper::toDomain);
+    }
+
+    @Override
+    public Order save(Order order, User user) {
+        final var orderEntity = OrderMapper.toEntity(order, user);
+        final var savedOrder = orderRepository.save(orderEntity);
+        return OrderMapper.toDomain(savedOrder);
     }
 }

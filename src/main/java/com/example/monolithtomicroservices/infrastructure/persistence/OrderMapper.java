@@ -30,7 +30,7 @@ public class OrderMapper {
 
     public static OrderEntity toEntity(Order order, User user) {
         final var orderEntity = OrderEntity.builder()
-                .id(order.id().value())
+                .id(order.id() != null ? order.id().value() : null)
                 .user(UserMapper.toEntity(user))
                 .build();
 
