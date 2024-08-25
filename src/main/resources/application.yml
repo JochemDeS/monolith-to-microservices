@@ -5,12 +5,10 @@ server:
 spring:
   application:
     name: monolith-to-microservices
-
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     password: postgres
     username: postgres
-
   data:
     web:
       pageable:

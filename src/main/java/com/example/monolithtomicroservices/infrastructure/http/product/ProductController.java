@@ -8,7 +8,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 
 @RestController
@@ -23,6 +25,8 @@ public class ProductController {
         this.getAllProductsUseCase = getAllProductsUseCase;
         this.getProductByIdUseCase = getProductByIdUseCase;
     }
+
+    private final RestTemplate restTemplate = new RestTemplate();
 
     @PostMapping
     public ProductsResponseModel getProducts(@Valid @RequestBody ProductRequestModel request,
