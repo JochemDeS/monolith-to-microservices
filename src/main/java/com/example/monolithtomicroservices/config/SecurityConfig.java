@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -33,7 +32,8 @@ public class SecurityConfig {
                             "/auth/login",
                             "/auth/register",
                             "/swagger-ui/**",
-                            "/v3/api-docs/**")
+                            "/v3/api-docs/**",
+                            "/products/**")
                             .permitAll()
                             .anyRequest().authenticated()
                 )

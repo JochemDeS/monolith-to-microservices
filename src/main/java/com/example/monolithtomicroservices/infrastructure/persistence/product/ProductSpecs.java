@@ -21,7 +21,7 @@ public class ProductSpecs {
     }
 
     public static Specification<ProductEntity> byPriceRange(PriceRange priceRange) {
-        return createSpec(priceRange, (root, criteriaBuilder) -> criteriaBuilder.between(root.get("rating"), priceRange.min(), priceRange.max()));
+        return createSpec(priceRange, (root, criteriaBuilder) -> criteriaBuilder.between(root.get("price"), priceRange.min(), priceRange.max()));
     }
 
     private static <T> Specification<ProductEntity> createSpec(T value, BiFunction<Root<ProductEntity>, CriteriaBuilder, Predicate> function) {
