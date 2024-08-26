@@ -35,7 +35,7 @@ Zorg ervoor dat Docker desktop aan het runnen is en navigeer naar de root van he
 voer het volgende commando uit:
 
 ```shell
-docker compose up -d .
+docker compose up -d
 ```
 
 Dit commando start een Postgres-container met de volgende inloggegevens:
