@@ -73,6 +73,7 @@ Deze architectuur verdeelt de applicatie in verschillende lagen:
 De applicatie maakt gebruik van de volgende Spring Boot dependencies:
 
 - Spring Web
+- Spring Security
 - Spring Data JPA
 - PostgreSQL Driver
 - Flyway Migration
